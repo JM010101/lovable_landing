@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Play, Clock, Eye } from 'lucide-react';
 import { videos } from '@/lib/data';
+import { formatDate, formatNumber } from '@/lib/utils';
 import Image from 'next/image';
 
 export default function VideoSection() {
@@ -76,13 +77,13 @@ export default function VideoSection() {
                   {video.title}
                 </h3>
                 <div className="flex items-center gap-4 text-sm text-gray-400">
-                  <span>{new Date(video.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                  <span>{formatDate(video.date)}</span>
                   {video.views && (
                     <>
                       <span>•</span>
                       <div className="flex items-center gap-1">
                         <Eye size={14} />
-                        <span>{video.views.toLocaleString()} views</span>
+                        <span>{formatNumber(video.views)} views</span>
                       </div>
                     </>
                   )}

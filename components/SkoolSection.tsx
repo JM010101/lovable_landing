@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Users, MessageSquare, TrendingUp, ArrowRight } from 'lucide-react';
 import { skoolData } from '@/lib/data';
+import { formatDate, formatNumber } from '@/lib/utils';
 
 export default function SkoolSection() {
   return (
@@ -40,7 +41,7 @@ export default function SkoolSection() {
                 <Users size={24} className="text-white" />
               </div>
               <div>
-                <div className="text-3xl font-bold text-white">{skoolData.memberCount.toLocaleString()}</div>
+                <div className="text-3xl font-bold text-white">{formatNumber(skoolData.memberCount)}</div>
                 <div className="text-gray-400 text-sm">Active Members</div>
               </div>
             </div>
@@ -58,7 +59,7 @@ export default function SkoolSection() {
                 <MessageSquare size={24} className="text-white" />
               </div>
               <div>
-                <div className="text-3xl font-bold text-white">{skoolData.stats.posts.toLocaleString()}</div>
+                <div className="text-3xl font-bold text-white">{formatNumber(skoolData.stats.posts)}</div>
                 <div className="text-gray-400 text-sm">Community Posts</div>
               </div>
             </div>
@@ -109,7 +110,7 @@ export default function SkoolSection() {
                   <div className="flex items-center gap-4 text-sm text-gray-400">
                     <span>By {post.author}</span>
                     <span>•</span>
-                    <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    <span>{formatDate(post.date)}</span>
                   </div>
                 </div>
                 <ArrowRight size={20} className="text-gray-400 group-hover:text-purple-400 group-hover:translate-x-1 transition-all" />
