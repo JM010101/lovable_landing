@@ -1,17 +1,23 @@
 'use client';
 
-import { useCallback, useMemo, useEffect } from 'react';
-import Particles from '@tsparticles/react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import { loadSlim } from '@tsparticles/slim';
 import type { Engine } from '@tsparticles/engine';
 
+const Particles = dynamic(() => import('@tsparticles/react').then((mod) => mod.default), {
+  ssr: false,
+});
+
 export default function MouseTrail() {
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
-    const initParticles = async () => {
-      const { tsParticles } = await import('@tsparticles/engine');
-      await loadSlim(tsParticles);
-    };
-    initParticles();
+    setIsMounted(true);
+  }, []);
+
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadSlim(engine);
   }, []);
 
   const options = useMemo(
@@ -92,9 +98,14 @@ export default function MouseTrail() {
     []
   );
 
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <Particles
       id="mouse-trail"
+      init={particlesInit}
       options={options as any}
       className="fixed inset-0 pointer-events-none z-50"
     />
